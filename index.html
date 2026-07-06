@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nohuitzitzilin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playwrite+AU+TAS:wght@100..400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="slide active" id="slide-1">
+        <h1 class="title">Letters for a Hummingbird,</h1>
+        <div class="gif-container">
+          <img
+            class="hummingbird-gif"
+            src="humming-bird.gif"
+            alt="Beautiful hummingbird animation"
+          />
+        </div>
+        <div class="flowers-container">
+          <img
+            class="flower"
+            src="flowers.gif"
+            alt="Decorative flower animation"
+          />
+          <img
+            class="flower"
+            src="flowers.gif"
+            alt="Decorative flower animation"
+          />
+          <img
+            class="flower"
+            src="flowers.gif"
+            alt="Decorative flower animation"
+          />
+          <img
+            class="flower"
+            src="flowers.gif"
+            alt="Decorative flower animation"
+          />
+          <img
+            class="flower"
+            src="flowers.gif"
+            alt="Decorative flower animation"
+          />
+        </div>
+      </div>
+
+      <div class="slide" id="slide-2">
+        <div class="letter-card">
+          <div class="letter-date">June 23, 2026</div>
+          <h2 class="letter-title">2 + 3 + 6 = (1 + 1)</h2>
+          <p class="letter-text">
+            Describir el conocerte, es tratar de describir el comienzo del
+            universo. Solo sé que antes había caos y luego mucha luz.
+          </p>
+        </div>
+      </div>
+
+      <div class="slide" id="slide-3">
+        <div class="letter-card">
+          <div class="letter-date">June 28, 2026</div>
+          <h2 class="letter-title">Besos, Gabriela Mistral</h2>
+          <p class="letter-text">
+            Hay besos perfumados, besos tibios que palpitan en íntimos anhelos,
+            hay besos que en los labios dejan huellas como un campo de sol entre
+            dos hielos.
+          </p>
+        </div>
+      </div>
+
+      <div class="slide" id="slide-4">
+        <div class="letter-card">
+          <div class="letter-date">June 28, 2026</div>
+          <h2 class="letter-title">Una declaración</h2>
+          <p class="letter-text">
+            Te quiero, no para rato, ni por momentos. Te quiero siempre, aquí
+            conmigo, aquí en mi pecho, aquí en tempestad y tormenta, aquí en
+            calma y silencio. Te quiero para mi, te quiero para querer.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <div class="controls-container">
+      <button class="control-btn active" data-slide="1" onclick="showSlide(1)">
+        1
+      </button>
+      <button class="control-btn" data-slide="2" onclick="showSlide(2)">
+        2
+      </button>
+      <button class="control-btn" data-slide="3" onclick="showSlide(3)">
+        3
+      </button>
+      <button class="control-btn" data-slide="3" onclick="showSlide(4)">
+        4
+      </button>
+    </div>
+
+    <script>
+      function showSlide(slideIndex) {
+        const slides = document.querySelectorAll(".slide");
+        slides.forEach((slide) => {
+          slide.classList.remove("active");
+        });
+
+        const buttons = document.querySelectorAll(".control-btn");
+        buttons.forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        const activeSlide = document.getElementById(`slide-${slideIndex}`);
+        if (activeSlide) {
+          activeSlide.classList.add("active");
+        }
+
+        const activeBtn = document.querySelector(
+          `.control-btn[data-slide="${slideIndex}"]`,
+        );
+        if (activeBtn) {
+          activeBtn.classList.add("active");
+        }
+      }
+    </script>
+  </body>
+</html>

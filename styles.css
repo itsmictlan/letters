@@ -1,0 +1,288 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --text-color: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; /* Backing color behind the transparent image */
+  font-family: "Playwrite AU TAS", cursive;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+/* Background image with reduced opacity */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("background.jpg");
+  background-attachment: fixed;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.5; /* Reduced background opacity */
+  z-index: -2;
+}
+
+/* Ambient light overlay to soften transition and ensure readability */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: -1;
+}
+
+.gif-container {
+  position: fixed;
+  top: 60%;
+  left: 0;
+  width: 180px; /* Appropriate size for a flying hummingbird */
+  z-index: 10;
+  pointer-events: none; /* Ensures the element doesn't block page interactions */
+  animation: flyAcross 14s linear infinite;
+}
+
+.hummingbird-gif {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 100;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@keyframes flyAcross {
+  0% {
+    transform: translate3d(-200px, -50%, 0) translateY(0) rotate(0deg)
+      scaleX(-1);
+  }
+  25% {
+    transform: translate3d(25vw, -50%, 0) translateY(-40px) rotate(-8deg)
+      scaleX(-1);
+  }
+  50% {
+    transform: translate3d(50vw, -50%, 0) translateY(30px) rotate(6deg)
+      scaleX(-1);
+  }
+  75% {
+    transform: translate3d(75vw, -50%, 0) translateY(-40px) rotate(-8deg)
+      scaleX(-1);
+  }
+  100% {
+    transform: translate3d(100vw, -50%, 0) translateY(0) rotate(0deg) scaleX(-1);
+  }
+}
+
+.flowers-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 30px;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+  padding-bottom: 10px;
+}
+
+.flower {
+  width: 90px;
+  max-width: 12vw; /* Scale down proportionally on smaller screens */
+  height: auto;
+  object-fit: contain;
+}
+
+/* Slide Layouts */
+.container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 60px; /* Leave space so that content never overlaps with flowers/buttons */
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  min-height: 70vh;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.slide.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Slide 2: Letter Card Style */
+.letter-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.letter-date {
+  font-size: 0.95rem;
+  color: #555555;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.letter-title {
+  font-size: 2.2rem;
+  color: #222222;
+  margin-bottom: 20px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.letter-text {
+  font-size: 1.15rem;
+  color: #333333;
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+/* Navigation Controls */
+.controls-container {
+  position: fixed;
+  bottom: 25px; /* Centered horizontally at the bottom of the page */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 100;
+}
+
+.control-btn {
+  color: #333333;
+  width: 36px; /* Smaller button size */
+  height: 36px;
+  border-radius: 50%;
+  font-family: inherit;
+  font-size: 0.95rem; /* Smaller number size */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.control-btn:hover {
+  transform: translateY(-2px);
+}
+
+.control-btn.active {
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding-bottom: 80px;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 12px;
+  }
+
+  .letter-card {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .letter-title {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+  }
+
+  .letter-text {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .controls-container {
+    bottom: 15px;
+  }
+
+  .control-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .flowers-container {
+    gap: 15px;
+  }
+
+  .gif-container {
+    width: 120px;
+    top: 55%;
+  }
+}
