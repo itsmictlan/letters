@@ -86,6 +86,51 @@
           </p>
         </div>
       </div>
+
+      <div class="slide not-loaded" id="slide-5">
+        <div class="night"></div>
+        <div class="ui-text">
+          <div
+            class="letter-date"
+            style="
+              color: white;
+              text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+              margin: 0 auto;
+              max-width: 700px;
+            "
+          >
+            July 23, 2026
+          </div>
+          <h2
+            class="letter-title"
+            style="
+              color: white;
+              text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+              margin: 0 auto;
+              max-width: 700px;
+            "
+          >
+            Un capitulo
+          </h2>
+          <p
+            class="letter-text"
+            style="
+              color: white;
+              text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+              margin: 0 auto;
+              max-width: 700px;
+              padding: 10px;
+            "
+          >
+            Nunca encontraré la forma de agradecerle a la vida por tenerte,
+            quisiera poder darte todas las estrellas por cada vez que me has
+            hecho sonreír. Creo que he llegado al punto en el que no me alcanzan
+            las palabras para sostenerte, pero por suerte tengo el corazón y el
+            tiempo para dartelo por todos los mañanas que sigan.
+          </p>
+        </div>
+        <div class="flowers" id="flowers"></div>
+      </div>
     </main>
 
     <div class="controls-container">
@@ -98,8 +143,11 @@
       <button class="control-btn" data-slide="3" onclick="showSlide(3)">
         3
       </button>
-      <button class="control-btn" data-slide="3" onclick="showSlide(4)">
+      <button class="control-btn" data-slide="4" onclick="showSlide(4)">
         4
+      </button>
+      <button class="control-btn" data-slide="5" onclick="showSlide(5)">
+        5
       </button>
     </div>
 
@@ -127,6 +175,107 @@
           activeBtn.classList.add("active");
         }
       }
+
+      // Garden Logic
+      const slide5 = document.getElementById("slide-5");
+      const flowersContainer = document.getElementById("flowers");
+      const clearBtn = document.getElementById("clear-btn");
+
+      const roseColors = [
+        { light: "#ff0a54", dark: "#800f2f", glow: "rgba(255, 10, 84, 0.4)" },
+        { light: "#d90429", dark: "#5c0011", glow: "rgba(217, 4, 41, 0.4)" },
+        { light: "#ef233c", dark: "#9e001c", glow: "rgba(239, 35, 60, 0.4)" },
+        { light: "#c1121f", dark: "#4a0007", glow: "rgba(193, 18, 31, 0.4)" },
+      ];
+
+      slide5.addEventListener("click", (e) => {
+        if (e.target.id === "clear-btn") return;
+
+        const x = e.clientX;
+        const y = e.clientY;
+
+        const xPercent = (x / window.innerWidth) * 100;
+        let yPercent = y / window.innerHeight;
+        yPercent = 0.5 + yPercent * 0.5;
+        const zIndex = Math.floor(yPercent * 100) + 10;
+
+        plantRose(xPercent, yPercent, zIndex);
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+          const allFlowers = document.querySelectorAll("#slide-5 .flower");
+          allFlowers.forEach((flower) => {
+            flower.style.transition =
+              "opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease";
+            flower.style.opacity = "0";
+            flower.style.transform =
+              flower.style.transform + " translateY(50px) scale(0.8)";
+            flower.style.filter = "blur(10px)";
+          });
+
+          setTimeout(() => {
+            flowersContainer.innerHTML = "";
+          }, 600);
+        });
+      }
+
+      function plantRose(xPercent, yPercent, zIndex) {
+        const flower = document.createElement("div");
+        flower.className = "flower";
+
+        flower.style.left = `${xPercent}vw`;
+        const bottomOffset = Math.max(0, (1 - yPercent) * 100 - 10);
+        flower.style.bottom = `${bottomOffset}vh`;
+        flower.style.zIndex = zIndex;
+
+        const color = roseColors[Math.floor(Math.random() * roseColors.length)];
+        const stemHeight = Math.floor(Math.random() * 20) + 20;
+        const scale = 0.25 + yPercent * 0.4;
+        const tilt = Math.floor(Math.random() * 20) - 10;
+        const growSpeed = (Math.random() * 1.5 + 1.5).toFixed(2);
+
+        flower.style.setProperty("--base-scale", scale);
+        flower.style.setProperty("--base-tilt", `${tilt}deg`);
+        flower.style.setProperty("--stem-height", `${stemHeight}vmin`);
+        flower.style.setProperty("--rose-light", color.light);
+        flower.style.setProperty("--rose-dark", color.dark);
+        flower.style.setProperty("--rose-glow", color.glow);
+        flower.style.setProperty("--grow-speed", `${growSpeed}s`);
+
+        flower.innerHTML = `
+          <div class="flower__leafs">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+          </div>
+        `;
+
+        flowersContainer.appendChild(flower);
+      }
+
+      const originalShowSlide = showSlide;
+      showSlide = function (index) {
+        originalShowSlide(index);
+        if (index === 5) {
+          setTimeout(() => {
+            slide5.classList.remove("not-loaded");
+            if (flowersContainer.children.length === 0) {
+              setTimeout(() => plantRose(25, 0.7, 80), 500);
+              setTimeout(() => plantRose(75, 0.8, 90), 1000);
+              setTimeout(() => plantRose(50, 0.6, 70), 1500);
+            }
+          }, 300);
+        } else {
+          slide5.classList.add("not-loaded");
+        }
+      };
     </script>
   </body>
 </html>
