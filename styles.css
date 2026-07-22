@@ -286,3 +286,216 @@ body::after {
     top: 55%;
   }
 }
+
+/* --- GARDEN SLIDE STYLES --- */
+#slide-5 {
+  --dark-color: #000;
+  display: none;
+}
+#slide-5.active {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: var(--dark-color);
+  overflow: hidden;
+  perspective: 1000px;
+  cursor: crosshair;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+#slide-5 .ui-text {
+  position: absolute;
+  top: 5vh;
+  width: 100%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  z-index: 100;
+  pointer-events: none;
+  opacity: 1;
+}
+#slide-5 .ui-text h1 {
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 50, 100, 0.5);
+}
+#slide-5 .ui-text p {
+  opacity: 0.9;
+}
+#slide-5 .clear-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.8rem;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 2rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+}
+#slide-5 .clear-btn:hover {
+  background-color: rgba(255, 50, 100, 0.3);
+  border-color: rgba(255, 50, 100, 0.8);
+  color: white;
+  box-shadow: 0 0 15px rgba(255, 50, 100, 0.5);
+  transform: translateY(-2px);
+}
+#slide-5 .clear-btn:active {
+  transform: translateY(0);
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+#slide-5 .night {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url("field_bg.jpg");
+  background-size: cover;
+  background-position: center bottom;
+  z-index: 0;
+}
+#slide-5 .flowers {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+#slide-5 .flower {
+  position: absolute;
+  bottom: 0;
+  transform-origin: bottom center;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(var(--base-scale, 1)) rotate(var(--base-tilt, 0deg));
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.3, 1), filter 0.8s ease;
+  pointer-events: none;
+}
+#slide-5 .flower::before {
+  content: "";
+  position: absolute;
+  top: -20%; left: -50%; right: -50%; bottom: 0;
+  z-index: 100;
+  background: transparent;
+  pointer-events: auto;
+}
+#slide-5 .flower:hover {
+  transform: scale(calc(var(--base-scale, 1) * 1.05)) rotate(calc(var(--base-tilt, 0deg) + 3deg));
+  filter: brightness(1.15);
+}
+#slide-5 .flower__line {
+  height: var(--stem-height, 40vmin);
+  width: 1.5vmin;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent, rgba(255, 255, 255, 0.2)), linear-gradient(to top, transparent 5%, #0a4022, #1c8c4a);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.5);
+  animation: grow-flower-tree var(--grow-speed, 2s) ease-in-out backwards;
+  position: relative;
+  border-radius: 1vmin 1vmin 0 0;
+}
+#slide-5 .flower__line__leaf {
+  --w: 5vmin;
+  --h: calc(var(--w) + 1vmin);
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  border-top-right-radius: var(--h);
+  border-bottom-left-radius: var(--h);
+  background-image: linear-gradient(to top, rgba(10, 64, 34, 0.6), #1c8c4a);
+  animation: blooming-leaf var(--grow-speed, 2s) ease-in-out backwards;
+  animation-delay: calc(var(--grow-speed, 2s) * 0.4);
+}
+#slide-5 .flower__line__leaf--1 {
+  top: 20%; left: 90%;
+  transform: rotate(70deg) rotateY(30deg);
+}
+#slide-5 .flower__line__leaf--2 {
+  top: 45%; left: -300%;
+  transform: rotate(-70deg) rotateY(30deg);
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: var(--h);
+  border-bottom-right-radius: var(--h);
+}
+#slide-5 .flower__leafs {
+  position: relative;
+  z-index: 2;
+  margin-bottom: -3vmin;
+  animation: blooming-flower 1.5s ease-out backwards;
+  animation-delay: calc(var(--grow-speed, 2s) - 0.2s);
+}
+#slide-5 .flower__leafs::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 8vmin; height: 8vmin;
+  background-color: var(--rose-glow, rgba(255, 0, 100, 0.3));
+  filter: blur(5vmin);
+  pointer-events: none;
+}
+#slide-5 .flower__leaf {
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 8vmin; height: 10vmin;
+  border-radius: 51% 49% 47% 53% / 44% 45% 55% 69%;
+  background-color: var(--rose-light, #ff4d6d);
+  background-image: linear-gradient(to top, var(--rose-dark, #800f2f), var(--rose-light, #ff4d6d));
+  transform-origin: bottom center;
+  opacity: 0.95;
+  box-shadow: inset 0 0 2vmin rgba(255, 255, 255, 0.3);
+}
+#slide-5 .flower__leaf--1 { transform: translate(-50%, 5%) rotateY(40deg) rotateX(-50deg); }
+#slide-5 .flower__leaf--2 { transform: translate(-50%, -2%) rotateX(40deg); }
+#slide-5 .flower__leaf--3 { transform: translate(-50%, 5%) rotateY(-40deg) rotateX(-50deg); }
+#slide-5 .flower__leaf--4 {
+  width: 7vmin; height: 7vmin;
+  transform-origin: bottom center;
+  border-radius: 4vmin 8vmin 4vmin 4vmin;
+  transform: translate(-50%, 15%) rotateX(60deg) rotate(-45deg);
+  background-image: linear-gradient(to top, var(--rose-dark), var(--rose-light));
+  z-index: 1;
+}
+#slide-5 .flower__white-circle {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 3vmin; height: 3vmin;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+@keyframes grow-flower-tree {
+  0% { height: 0; opacity: 0; }
+  100% { height: var(--stem-height, 40vmin); opacity: 1; }
+}
+@keyframes blooming-flower {
+  0% { transform: scale(0) rotate(15deg); opacity: 0; }
+  60% { transform: scale(1.1) rotate(-5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes blooming-leaf {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+#slide-5.not-loaded * {
+  animation-play-state: paused !important;
+}
